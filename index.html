@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tesla — Elektr avtomobillar</title>
+    <meta
+      name="description"
+      content="Tesla modellari, narxlar, aylanma karusel, 3D ko‘rinish va aloqa formasi."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23000' width='32' height='32'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='16' font-family='Arial'%3ET%3C/text%3E%3C/svg%3E" />
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer@3.5.0/dist/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <a class="skip" href="#bosh">Asosiy qismga o‘tish</a>
+
+    <header class="site-header" id="header">
+      <a class="logo" href="#bosh">TESLA</a>
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="siteNav"
+      >
+        <span class="menu-bars" aria-hidden="true"></span>
+        Menyu
+      </button>
+      <nav class="site-nav" id="siteNav">
+        <a class="nav-link is-active" href="#bosh">Bosh sahifa</a>
+        <a class="nav-link" href="#modellar">Modellar</a>
+        <a class="nav-link" href="#karusel">Karusel</a>
+        <a class="nav-link" href="#studiya">3D studiya</a>
+        <a class="nav-link" href="#imkoniyatlar">Imkoniyatlar</a>
+        <a class="nav-link" href="#aloqa">Aloqa</a>
+        <a class="nav-cta" href="#buyurtma">Buyurtma</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="bosh">
+        <div class="hero-copy">
+          <p class="eyebrow">Elektr haydash</p>
+          <h1>Kelajakni hozir boshqaring</h1>
+          <p class="lede">
+            Sakkizta Tesla modeli, jonli narxlar va har tomonga aylanadigan 3D
+            ko‘rinish. Rasmlarni o‘z havolangiz bilan almashtiring.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="#karusel">Karuselni ko‘rish</a>
+            <a class="btn btn-ghost" href="#studiya">3D da aylantirish</a>
+          </div>
+        </div>
+        <dl class="hero-stats">
+          <div>
+            <dt>Modellar</dt>
+            <dd>45 ta</dd>
+          </div>
+          <div>
+            <dt>Cyberbeast</dt>
+            <dd>1.6 s</dd>
+          </div>
+          <div>
+            <dt>Boshlang‘ich</dt>
+            <dd>$36,990</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="section" id="modellar">
+        <div class="section-head">
+          <p class="eyebrow">Katalog</p>
+          <h2>Modellar</h2>
+          <p>Kartani bosing — karusel shu avtomobilga o‘tadi. Narx va rasmni pastdagi panelda URL orqali yangilang.</p>
+        </div>
+        <div class="model-grid" id="modelGrid"></div>
+      </section>
+
+      <section class="section section-dark" id="karusel">
+        <div class="section-head light">
+          <p class="eyebrow">Aylanma vitrina</p>
+          <h2>Karusel</h2>
+          <p>Rasmlar avtomatik aylanadi. Strelka, nuqta yoki surish bilan boshqaring.</p>
+        </div>
+
+        <div class="carousel" id="carousel" tabindex="0" aria-roledescription="karusel">
+          <img id="slideImage" alt="" />
+          <div class="slide-shade"></div>
+          <div class="slide-copy">
+            <p class="eyebrow" id="slideTag"></p>
+            <h3 id="slideName"></h3>
+            <p class="slide-price" id="slidePrice"></p>
+            <ul class="spec-list" id="slideSpecs"></ul>
+            <p class="status" id="slideStatus"></p>
+            <div class="slide-actions">
+              <a class="btn btn-light" href="#buyurtma" id="slideOrder">Buyurtma</a>
+              <button class="btn btn-ghost" type="button" id="slideStudio">3D da ochish</button>
+            </div>
+          </div>
+          <button class="carousel-btn prev" type="button" id="prevSlide" aria-label="Oldingi avtomobil">‹</button>
+          <button class="carousel-btn next" type="button" id="nextSlide" aria-label="Keyingi avtomobil">›</button>
+          <div class="dots" id="dots" role="tablist" aria-label="Avtomobillar"></div>
+        </div>
+
+        <form class="editor" id="editor">
+          <div class="editor-head">
+            <h3>Rasm va narxni URL orqali o‘zgartirish</h3>
+            <p>
+              Havolani qo‘ying va saqlang. O‘zgarish shu brauzerda qoladi.
+              Doimiy qiymatni <code>script.js</code> ichidagi <code>DEFAULT_CARS</code> ro‘yxatida ham yozishingiz mumkin.
+            </p>
+          </div>
+          <label>
+            Avtomobil
+            <select id="editCar"></select>
+          </label>
+          <label>
+            Rasm URL
+            <input id="editImage" type="url" placeholder="https://..." required />
+          </label>
+          <label>
+            Narx (USD). Bo‘sh qoldirsangiz, narx e’lon qilinmagan bo‘ladi
+            <input id="editPrice" type="number" min="0" step="1" placeholder="36990" />
+          </label>
+          <label>
+            Shu model uchun 3D GLB URL (ixtiyoriy)
+            <input id="editModel" type="url" placeholder="https://.../model.glb" />
+          </label>
+          <div class="editor-actions">
+            <button class="btn btn-light" type="submit">Saqlash</button>
+            <button class="btn btn-ghost" type="button" id="resetConfig">Asliga qaytarish</button>
+          </div>
+          <p class="form-note" id="editorNote" role="status"></p>
+        </form>
+      </section>
+
+      <section class="section" id="studiya">
+        <div class="section-head">
+          <p class="eyebrow">3D</p>
+          <h2>Studiya</h2>
+          <p>Sichqoncha yoki barmoq bilan aylantiring, yaqinlashtiring va har tomondan ko‘ring.</p>
+        </div>
+        <div class="studio">
+          <div class="viewer-wrap">
+            <model-viewer
+              id="carViewer"
+              camera-controls
+              auto-rotate
+              auto-rotate-delay="0"
+              shadow-intensity="1.2"
+              exposure="1.05"
+              interaction-prompt="auto"
+              camera-orbit="30deg 70deg 105%"
+              src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/ToyCar/glTF-Binary/ToyCar.glb"
+              alt="Aylanadigan 3D avtomobil modeli"
+            ></model-viewer>
+            <p class="viewer-status" id="viewerStatus">3D model yuklanmoqda…</p>
+          </div>
+          <div class="studio-panel">
+            <h3 id="studioTitle">Namunaviy model</h3>
+            <p>
+              Standart model — ochiq Toy Car (CC0). Tesla’ning rasmiy 3D fayli emas.
+              O‘z <strong>.glb</strong> havolangizni qo‘ysangiz, o‘sha avtomobil aylanadi.
+            </p>
+            <div class="studio-actions">
+              <button class="btn btn-dark" type="button" id="toggleSpin">Aylanishni to‘xtatish</button>
+              <button class="btn btn-line" type="button" id="resetCam">Kamerani tiklash</button>
+            </div>
+            <form id="modelForm">
+              <label>
+                Umumiy 3D model URL
+                <input id="modelUrl" type="url" placeholder="https://.../car.glb" required />
+              </label>
+              <button class="btn btn-dark" type="submit">Modelni yuklash</button>
+            </form>
+            <p class="form-note" id="modelNote" role="status"></p>
+            <p class="credit">
+              Standart model: Toy Car, Khronos glTF namunasi, CC0.
+              Yirikroq sport konsepti uchun shu havolani qo‘ying:
+              Car Concept (CC BY 4.0, Darmstadt Graphics Group).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-light" id="imkoniyatlar">
+        <div class="section-head">
+          <p class="eyebrow">Nega Tesla</p>
+          <h2>Imkoniyatlar</h2>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Imkoniyatlar">
+          <button class="tab is-active" type="button" role="tab" aria-selected="true" data-tab="pilot">Avtopilot</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="power">Quvvat</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="safe">Xavfsizlik</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="app">Ilova</button>
+        </div>
+        <div class="tab-panels">
+          <article class="tab-panel is-active" id="panel-pilot" role="tabpanel">
+            <h3>Haydovchiga yordam</h3>
+            <p>
+              Yo‘lni ushlab turish, moslashuvchan kruiz va avtoturargoh rejimlari
+              haydashni soddalashtiradi. Bu yordamchi tizim — haydovchi yo‘lni kuzatishi kerak.
+            </p>
+          </article>
+          <article class="tab-panel" id="panel-power" role="tabpanel" hidden>
+            <h3>Zaryad va masofa</h3>
+            <p>
+              Uy quvvati, yo‘ldagi tezkor stansiyalar va katta batareya uzoq safarni
+              rejalashtirishni oson qiladi. Aniq masofa model, tezlik va ob-havoga bog‘liq.
+            </p>
+          </article>
+          <article class="tab-panel" id="panel-safe" role="tabpanel" hidden>
+            <h3>Mustahkam konstruktsiya</h3>
+            <p>
+              Past og‘irlik markazi, qattiq kuzov va to‘qnashuvni oldini olishga
+              yordam beradigan sensorlar xavfsizlikni asosiy qismga aylantiradi.
+            </p>
+          </article>
+          <article class="tab-panel" id="panel-app" role="tabpanel" hidden>
+            <h3>Telefondan nazorat</h3>
+            <p>
+              Qulflash, iqlim, joylashuv va zaryad holatini telefon orqali ko‘rish
+              mumkin. Kalit sifatida telefonning o‘zi ishlaydi.
+            </p>
+          </article>
+        </div>
+
+        <div class="faq">
+          <h3>Savollar</h3>
+          <details>
+            <summary>Rasmni qanday almashtiraman?</summary>
+            <p>Karusel ostidagi panelda avtomobilni tanlang, yangi rasm URL ini qo‘ying va Saqlash ni bosing.</p>
+          </details>
+          <details>
+            <summary>3D modelni qanday almashtiraman?</summary>
+            <p>Studiyadagi maydonga .glb havolasini qo‘ying. Alohida model uchun karusel panelidagi 3D URL ham ishlaydi.</p>
+          </details>
+          <details>
+            <summary>Buyurtma va xabar qayerga ketadi?</summary>
+            <p>Bu statik sayt. Xabarlar serverga emas, shu brauzerning xotirasiga yoziladi va pastdagi ro‘yxatda ko‘rinadi.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section section-dark" id="buyurtma">
+        <div class="section-head light">
+          <p class="eyebrow">Konfiguratsiya</p>
+          <h2>Buyurtma</h2>
+          <p>Model, rang va g‘ildirakni tanlang. Jami narx darhol yangilanadi.</p>
+        </div>
+        <form class="order" id="orderForm">
+          <div class="order-grid">
+            <label>
+              Model
+              <select id="orderCar" required></select>
+            </label>
+            <label>
+              Rang
+              <select id="orderPaint"></select>
+            </label>
+            <label>
+              G‘ildirak
+              <select id="orderWheel"></select>
+            </label>
+            <label>
+              Ism
+              <input id="orderName" name="name" autocomplete="name" required minlength="2" />
+            </label>
+            <label>
+              Email
+              <input id="orderEmail" name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              Telefon
+              <input id="orderPhone" name="tel" type="tel" autocomplete="tel" required />
+            </label>
+          </div>
+          <div class="order-total">
+            <span>Jami</span>
+            <strong id="orderTotal">—</strong>
+          </div>
+          <p class="order-summary" id="orderSummary"></p>
+          <button class="btn btn-light" type="submit">Buyurtmani saqlash</button>
+          <p class="form-note" id="orderNote" role="status"></p>
+        </form>
+      </section>
+
+      <section class="section section-light" id="aloqa">
+        <div class="section-head">
+          <p class="eyebrow">Bog‘lanish</p>
+          <h2>Aloqa</h2>
+          <p>Savol yoki sinov haydoviga yozing. Maydonlar tekshiriladi, xabar ro‘yxatga tushadi.</p>
+        </div>
+        <div class="contact-layout">
+          <form class="contact" id="contactForm">
+            <label>
+              Ism
+              <input id="contactName" name="name" autocomplete="name" required minlength="2" />
+              <span class="field-error" id="errName"></span>
+            </label>
+            <label>
+              Email
+              <input id="contactEmail" name="email" type="email" autocomplete="email" required />
+              <span class="field-error" id="errEmail"></span>
+            </label>
+            <label>
+              Telefon
+              <input id="contactPhone" name="tel" type="tel" autocomplete="tel" required />
+              <span class="field-error" id="errPhone"></span>
+            </label>
+            <label>
+              Model
+              <select id="contactCar" required></select>
+            </label>
+            <label>
+              Xabar
+              <textarea id="contactMessage" name="message" rows="5" required minlength="10"></textarea>
+              <span class="field-error" id="errMessage"></span>
+            </label>
+            <button class="btn btn-dark" type="submit">Xabarni yuborish</button>
+            <p class="form-note" id="contactNote" role="status"></p>
+          </form>
+          <aside class="inbox">
+            <div class="inbox-head">
+              <h3>Yuborilganlar</h3>
+              <button class="text-btn" type="button" id="clearInbox">Tozalash</button>
+            </div>
+            <ul id="inboxList"></ul>
+          </aside>
+        </div>
+        <ul class="contact-facts">
+          <li><span>Manzil</span> Toshkent, namoyish shourumi</li>
+          <li><span>Telefon</span> +998 71 200 00 00</li>
+          <li><span>Email</span> salom@tesla-site.local</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>TESLA · namoyish sayti</p>
+      <p>
+        Tesla va model nomlari Tesla, Inc. ga tegishli. Narxlar 2026-yil noyabr oyi
+        ochiq ma’lumotlariga yaqin; Model S va Model X ishlab chiqarilishi yakunlangan.
+        Raqamlarni o‘zingiz yangilashingiz mumkin.
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
